@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+
+    <style>
+        
+        body{
+            
+            font-family: Verdana,Geneva,sans-serif;
+            
+        }
+        
+        #box{
+            width:200px;
+            height:200px;
+            background-color: red;
+            display="none";
+            position: relative;
+        }
+        
+        .bold{
+            font-weight: bold;
+        }
+        
+    </style>
+
+</head>
+    
+<body>
+
+    <h1>Test your reaction!</h1>
+    
+    <p class="bold">Your Times: <span id="time">0</span>s</p>
+    <div id="box"></div>
+    
+    <script>
+        
+        
+        //隨機顏色產生(6碼)
+        function getRandomColor(){
+            
+            var letters = '0123456789ABCDEF'.split(''); //16進字，用"空格"使其分開作為獨立的元素
+            var color = '#';
+            
+            for(var i=0; i<6; i++){
+                
+                color +=letters[Math.floor(Math.random()*16)];//讓color的色號變成#A12365
+            
+            }
+            
+            return color;
+            
+        }
+        
+        
+        var createTime; var clickTime; var reactionTime;
+        
+        function makeBox(){
+            
+            
+            var time=Math.random()*1000;
+        
+            //setTimeout是已經有的function
+            setTimeout(function(){
+                
+                //當亂數大於0.5時，就為圓形
+                if(Math.random()>0.5){
+                    
+                    document.getElementById("box").style.borderRadius="100px";
+                    
+                }else{
+                
+                    document.getElementById("box").style.borderRadius="0";
+                
+                };
+                
+                var top = Math.random()*500;
+                
+                var left= Math.random()*800;
+                
+                document.getElementById("box").style.top = top+"px";
+                
+                document.getElementById("box").style.left = left+"px";
+                
+                document.getElementById("box").style.backgroundColor=getRandomColor();
+            
+                document.getElementById("box").style.display="block";
+            
+                createTime=Date.now();//Date.now()為已定義好的功能，表示現在的時間
+                
+            },time)
+            
+        }
+        
+        
+        
+        document.getElementById("box").onclick=function(){
+            
+            this.style.display="none";
+            
+            clickTime=Date.now();
+            
+            reactionTime = (clickTime - createTime)/1000; //微秒要除以1000
+            
+            document.getElementById("time").innerHTML=reactionTime;
+            
+            makeBox();
+            
+        }
+        
+        makeBox();
+        
+    </script>
+    
+    
+
+</body>
+</html>
